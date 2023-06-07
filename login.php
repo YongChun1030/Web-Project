@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   if ($loginSuccessful) {
     // Redirect to the dashboard page after successful login
-    header('Location: excel.php');
+    header('Location: main.php');
     exit;
   } else {
     // Increment login attempts and check if maximum attempts reached
