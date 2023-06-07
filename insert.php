@@ -79,5 +79,10 @@
         <p>Address:<input type="text" name="studentaddress"></p>
         <p><input type="submit" value="Add New"></p>
     </form>
+
+    <!-- Home button -->
+    <form action="main.php">
+        <p><input type="submit" value="Home"></p>
+    </form>
 </body>
 </html>
