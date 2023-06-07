@@ -8,5 +8,18 @@
 </head>
 <body>
     <p>Welcome to the main page</p>
+
+    <button onclick="insertData()">Insert data</button>
+    <button onclick="uploadExcel()">Upload excel</button>
+
+    <script>
+        function insertData() {
+            window.location.href = "insert.php";
+        }
+
+        function uploadExcel() {
+            window.location.href = "excel.php";
+        }
+    </script>
 </body>
 </html>
