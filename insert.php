@@ -71,13 +71,15 @@
                 
                         if ($success) {
                             echo '<script type="text/javascript"> alert("Successful insert");</script>';
+                            header("Location: insert.php");
+                            exit();
                         } else {
                             echo '<script type="text/javascript"> alert("Insert failed");</script>';
                         }
                         
                         // Redirect to the insert.php page
-                        header("Location: insert.php");
-                        exit();
+                        // header("Location: insert.php");
+                        // exit();
                     } else {
                         foreach ($errors as $error) {
                             echo '<script type="text/javascript"> alert("' . $error . '");</script> ';
