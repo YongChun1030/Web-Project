@@ -21,7 +21,7 @@
             
         echo '<table><thead>';
 
-        echo ("<tr><th>Name</th><th>Birth Date</th><th>Age</th><th>Address</th></tr></thead>");
+        echo ("<tr><th>Name</th><th>Birth Date</th><th>Age</th><th>Address</th><th>Phone Number</th></tr></thead>");
         
         foreach ( $rows as $row ) {
             echo "<tbody><tr><td>";
@@ -32,6 +32,8 @@
             echo($row['age']);
             echo("</td><td>");
             echo($row['address']);
+            echo("</td><td>");
+            echo($row['number']);
             echo("</td></tr></tbody>");
         }
 

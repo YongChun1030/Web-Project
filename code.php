@@ -29,8 +29,10 @@ if(isset($_POST['save_excel_data']))
                 $birth = $row['1'];
                 $age = $row['2'];
                 $address = $row['3'];
+                $number = $row['4'];
 
-                $studentQuery = "INSERT INTO student_data (name,birth,age,address) VALUES ('$name','$birth','$age','$address')";
+
+                $studentQuery = "INSERT INTO student_data (name,birth,age,address,number) VALUES ('$name','$birth','$age','$number')";
                 $result = mysqli_query($conn, $studentQuery);
                 $msg = true;
             }
@@ -38,19 +40,6 @@ if(isset($_POST['save_excel_data']))
             {
                 $count = "1";
             }
-        }
-
-        if(isset($msg))
-        {
-            $_SESSION['message'] = "Successfully Imported";
-            header('Location: excel.php');
-            exit(0);
-        }
-        else
-        {
-            $_SESSION['message'] = "Not Imported";
-            header('Location: excel.php');
-            exit(0);
         }
     }
     else

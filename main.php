@@ -39,6 +39,8 @@
                     <a href='insert.php'><button class="btn btn-outline-secondary btn-lg">Insert Data</button></a>
                     <a href='excel.php'><button class="btn btn-outline-secondary btn-lg">Upload Excel File</button></a>
 
+                    <p><a href='index.php'><button class="btn btn-outline-secondary btn-lg">Log Out</button></a></p>
+
             </div>
             
         </header>
