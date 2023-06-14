@@ -2,6 +2,8 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="style.css">
+  
+
   <title>Automated Birthday-Wisher</title>
 </head>
 <body>
