@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300&display=swap');
+
+body {
+  padding: 0;
+  margin: 0;
+  background: #f2f6e9;
+}
+
+.container {
+  background-image: url('assets/balloon.jpg');
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  border-radius: 15px;
+}
+
+.option {
+    left: 50%;
+    position: absolute;
+    top: 100%;
+    font-family: 'Outfit', sans-serif;
+    transform: translate(-50%, -55%);
+    text-align: center;
+    margin-top: 40px;
+  }
+
+button {
+    background:#0b0000;
+    border-radius: 50px;
+    border: none;
+    color:#ecebeb;
+    margin-top: 40px;
+    margin-right: 10px;
+  }
+  
+button:hover {
+    border:1px solid #fff;
+    background:#fff;
+    color:#000;
+  }
