@@ -61,14 +61,14 @@
         echo "Current time: " . date('H:i:s') . "\n";
 
         // Check if it's 12 AM
-        //if ($current_hour === '20') {
+        if ($current_hour === '20') {
             $upcoming_birthdays = get_upcoming_birthdays();
 
             // Send birthday wishes to each upcoming birthday
             foreach ($upcoming_birthdays as $birthday) {
                 send_birthday_wishes($birthday['name'], $birthday['phonenum']);
             }
-        //}
+        }
 
     
 ?>
