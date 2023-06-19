@@ -42,9 +42,9 @@
                     $studentage = $_POST['studentage'];
                     $studentaddress = $_POST['studentaddress'];
                     $studentphone = $_POST['studentphone'];
-                
+
                     $errors = array();
-                
+
                     // Validate text fields are not empty
                     if (empty($studentname)) {
                         $errors[] = "Name is required.";
@@ -61,13 +61,13 @@
                     if (empty($studentphone)) {
                         $errors[] = "Phone number is required.";
                     }
-                
+
                     if (empty($errors)) {
                         $sqlCheck = "SELECT COUNT(*) FROM student_data WHERE phonenum = :studentphone";
                         $stmtCheck = $pdo->prepare($sqlCheck);
                         $stmtCheck->execute(array(':studentphone' => $studentphone));
                         $count = $stmtCheck->fetchColumn();
-                    
+
                         if ($count > 0) {
                             $message = "Phone number already exists.";
                         } else {
@@ -80,7 +80,7 @@
                                 ':studentaddress' => $studentaddress,
                                 ':studentphone' => $studentphone
                             ));
-                    
+
                             if ($success) {
                                 $message = "Successful insert";
                                 header("Location: insert.php");
@@ -95,7 +95,7 @@
                     echo '<p>' . $message . '</p>';
                 }
             ?>
-            
+
             <form method="post">
                 <div class="form-group">
                     <label for="studentname" class="form-label">Name:</label>
@@ -129,4 +129,4 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-</html>
+</html
