@@ -30,20 +30,42 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $age = $_POST['age'];
     $address = $_POST['address'];
 
-    // Update the record in the database
-    $stmt = $pdo->prepare("UPDATE student_data SET name = :name, birth = :birth, age = :age, address = :address WHERE phonenum = :phonenum");
-    $stmt->execute([
-        ':name' => $name,
-        ':birth' => $birth,
-        ':age' => $age,
-        ':address' => $address,
-        ':phonenum' => $phonenum
-    ]);
+    // Validate input
+    $errors = [];
+    if (empty($name)) {
+        $errors[] = 'Name is required.';
+    }
+    if (empty($birth)) {
+        $errors[] = 'Birth date is required.';
+    } elseif (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $birth)) {
+        $errors[] = 'Invalid birth date format. Use yyyy-mm-dd.';
+    }
+    if (empty($age)) {
+        $errors[] = 'Age is required.';
+    } elseif (!is_numeric($age)) {
+        $errors[] = 'Age must be a numeric value.';
+    }
+    if (empty($address)) {
+        $errors[] = 'Address is required.';
+    }
 
-    // Redirect to the view page after the update is completed
-    header("Location: viewData.php");
-    exit();
+    if (empty($errors)) {
+        // Update the record in the database
+        $stmt = $pdo->prepare("UPDATE student_data SET name = :name, birth = :birth, age = :age, address = :address WHERE phonenum = :phonenum");
+        $stmt->execute([
+            ':name' => $name,
+            ':birth' => $birth,
+            ':age' => $age,
+            ':address' => $address,
+            ':phonenum' => $phonenum
+        ]);
+
+        // Redirect to the view page after the update is completed
+        header("Location: viewData.php");
+        exit();
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -60,6 +82,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
         <h1>Edit Data</h1>
         <form method="post">
+            <?php if (!empty($errors)) : ?>
+                <div class="error">
+                    <?php foreach ($errors as $error) : ?>
+                        <p><?php echo $error; ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
             <div class="form-group">
                 <label for="phonenum">Phone Number:</label>
                 <input type="text" name="phonenum" id="phonenum" value="<?php echo $row['phonenum']; ?>" readonly>
@@ -70,7 +99,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             <div class="form-group">
                 <label for="birth">Birth Date:</label>
-                <input type="text" name="birth" id="birth" value="<?php echo $row['birth']; ?>" required>
+                <input type="text" name="birth" id="birth" value="<?php echo $row['birth']; ?>" required pattern="\d{4}-\d{2}-\d{2}">
+                <small>Format: yyyy-mm-dd</small>
             </div>
             <div class="form-group">
                 <label for="age">Age:</label>
