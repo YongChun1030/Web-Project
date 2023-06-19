@@ -48,6 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($address)) {
         $errors[] = 'Address is required.';
     }
+    if (empty($phonenum)) {
+        $errors[] = 'Phone number is required.';
+    } elseif (!preg_match('/^\+\d+$/', $phonenum)) {
+        $errors[] = 'Invalid phone number format. Use "+xxxxxxxxxxx" format.';
+    }
 
     if (empty($errors)) {
         // Update the record in the database
@@ -91,7 +96,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <?php endif; ?>
             <div class="form-group">
                 <label for="phonenum">Phone Number:</label>
-                <input type="text" name="phonenum" id="phonenum" value="<?php echo $row['phonenum']; ?>" readonly>
+                <input type="text" name="phonenum" id="phonenum" value="<?php echo $row['phonenum']; ?>" required pattern="\+\d+" title="Use '+xxxxxxxxxxx' format">
             </div>
             <div class="form-group">
                 <label for="name">Name:</label>
