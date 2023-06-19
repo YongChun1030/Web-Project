@@ -12,11 +12,7 @@
 
 </head>
 <body>
-    <div class="container">
-            <div class="overlay"></div>        
-            <div class="row">
-            <div class="col-md-12 mt-4">
-
+    <div class="col-md-6 mt-4">
                 <?php
                 if(isset($_SESSION['message']))
                 {
@@ -34,18 +30,12 @@
                             <input type="file" name="import_file" accept= ".xlsx, .xls"class="form-control" />
                             <button type="submit" name="save_excel_data" class="btn btn-primary mt-3">Import</button>
                         </form>
-                    </div>
-                </div>
+                        <a href='main.php'><button class="btn btn-primary mt-3">Cancel</button></a>
 
-                <div class="option">
-                    
-                    <a href='main.php'><button class="btn btn-outline-secondary btn-lg">Cancel</button></a>
+                    </div>
+                </div> 
             </div>
-            </div>
-        </div>
-    </div>
     
-            </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

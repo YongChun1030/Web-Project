@@ -17,22 +17,44 @@ if (isset($_POST['save_excel_data'])) {
         $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($inputFileNamePath);
         $data = $spreadsheet->getActiveSheet()->toArray();
 
-        $count = 0;
+        $validData = true; // Flag variable for data validity
+
         foreach ($data as $row) {
             if ($count > 0) {
-                $name = $row[0];
-                $birth = $row[1];
-                $age = $row[2];
-                $address = $row[3];
-                $number = $row[4];
+                $name = $row[0] ?? '';
+                $birth = $row[1] ?? '';
+                $age = $row[2] ?? '';
+                $address = $row[3] ?? '';
+                $number = $row[4] ?? '';
 
-                $studentQuery = "INSERT INTO student_data (name, birth, age, address, phonenum) VALUES (?, ?, ?, ?, ?)";
-                $stmt = $pdo->prepare($studentQuery);
-                $stmt->execute([$name, $birth, $age, $address, $number]);
-                $_SESSION['message'] = "Data imported successfully!";
+                if (!empty($name) && !empty($birth) && !empty($age) && !empty($address) && !empty($number)) {
+                    // Check for duplicate phone number
+                    $stmt = $pdo->prepare("SELECT COUNT(*) FROM student_data WHERE phonenum = ?");
+                    $stmt->execute([$number]);
+                    $count = $stmt->fetchColumn();
+
+                    if ($count == 0) {
+                        $studentQuery = "INSERT INTO student_data (name, birth, age, address, phonenum) VALUES (?, ?, ?, ?, ?)";
+                        $stmt = $pdo->prepare($studentQuery);
+                        $stmt->execute([$name, $birth, $age, $address, $number]);
+                    } else {
+                        // Duplicate phone number detected
+                        $_SESSION['message'] = "Duplicate phone number detected: " . $number;
+                        $validData = false; // Invalid data detected
+                        break; // Stop processing further rows
+                    }
+                } else {
+                    $_SESSION['message'] = "Invalid data format in the Excel file. Please check the columns.";
+                    $validData = false; // Invalid data detected
+                    break; // Stop processing further rows
+                }
             } else {
                 $count = 1;
             }
+        }
+
+        if ($validData) {
+            $_SESSION['message'] = "Data imported successfully!";
         }
     } else {
         $_SESSION['message'] = "Invalid File";

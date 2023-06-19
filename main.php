@@ -1,7 +1,3 @@
-<?php
-    require_once "auto.php";
-?>
-
 <!DOCTYPE html>
 
 <html lang="en">
