@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Add New Data</title>
+    <link rel="icon" href="assets/bd.jpg" type="image/png">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="style2.css">
 </head>

@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="style.css">
-  
-
   <title>Automated Birthday-Wisher</title>
+  <link rel="icon" href="assets/bd.jpg" type="image/png">
 </head>
 <body>
     <section>
