@@ -1,9 +1,10 @@
 <?php
+
+    require_once "pdo.php";
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
-    
+    date_default_timezone_set('Asia/Kuala_Lumpur');
     use Twilio\Rest\Client;
-    require_once "pdo.php";
     
     function get_upcoming_birthdays()
     {
@@ -37,7 +38,7 @@
         require_once 'vendor\twilio-php-7.4.2\src\Twilio\autoload.php';
     
         $account_sid = "ACc3a0c089708b05f1a0880c43d95e1413";
-        $auth_token = "ac67e53227b14518ca294dbd3feabb7f";
+        $auth_token = "d473ad4d8959a6579080be5fa14bb670";
         $twilio_phone_number = '+14155238886';
     
         $twilio = new Client($account_sid, $auth_token);
@@ -53,22 +54,17 @@
         );
     }
 
-    
-        // Get the current hour
-        $current_hour = date('H');
+    // Get the current time without seconds
+    $current_time = date('H:i');
 
-        // Display the current time in the console
-        echo "Current time: " . date('H:i:s') . "\n";
+    // Display the current time in the console
+    echo "Current time: " . $current_time . "\n";
 
-        // Check if it's 12 AM
-        if ($current_hour === '20') {
-            $upcoming_birthdays = get_upcoming_birthdays();
 
-            // Send birthday wishes to each upcoming birthday
-            foreach ($upcoming_birthdays as $birthday) {
-                send_birthday_wishes($birthday['name'], $birthday['phonenum']);
-            }
-        }
+        $upcoming_birthdays = get_upcoming_birthdays();
 
-    
+        // Send birthday wishes to each upcoming birthday
+        foreach ($upcoming_birthdays as $birthday) {
+            send_birthday_wishes($birthday['name'], $birthday['phonenum']);
+     }
 ?>
