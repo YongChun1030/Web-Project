@@ -41,6 +41,7 @@
                     $studentbirth = $_POST['studentbirth'];
                     $studentage = $_POST['studentage'];
                     $studentaddress = $_POST['studentaddress'];
+                    $studentphone = $_POST['studentphone'];
                 
                     $errors = array();
                 
@@ -57,34 +58,41 @@
                     if (empty($studentaddress)) {
                         $errors[] = "Address is required.";
                     }
+                    if (empty($studentphone)) {
+                        $errors[] = "Phone number is required.";
+                    }
                 
-                    // If there are no errors, insert the data and redirect
                     if (empty($errors)) {
-                        $sql = "INSERT INTO student_data (name, birth, age, address) VALUES (:studentname, :studentbirth, :studentage, :studentaddress)";
-                        $stmt = $pdo->prepare($sql);
-                        $success = $stmt->execute(array(
-                            ':studentname' => $studentname,
-                            ':studentbirth' => $studentbirth,
-                            ':studentage' => $studentage,
-                            ':studentaddress' => $studentaddress
-                        ));
-                
-                        if ($success) {
-                            echo '<script type="text/javascript"> alert("Successful insert");</script>';
-                            header("Location: insert.php");
-                            exit();
+                        $sqlCheck = "SELECT COUNT(*) FROM student_data WHERE phonenum = :studentphone";
+                        $stmtCheck = $pdo->prepare($sqlCheck);
+                        $stmtCheck->execute(array(':studentphone' => $studentphone));
+                        $count = $stmtCheck->fetchColumn();
+                    
+                        if ($count > 0) {
+                            $message = "Phone number already exists.";
                         } else {
-                            echo '<script type="text/javascript"> alert("Insert failed");</script>';
-                        }
-                        
-                        // Redirect to the insert.php page
-                        // header("Location: insert.php");
-                        // exit();
-                    } else {
-                        foreach ($errors as $error) {
-                            echo '<script type="text/javascript"> alert("' . $error . '");</script> ';
+                            $sqlInsert = "INSERT INTO student_data (name, birth, age, address, phonenum) VALUES (:studentname, :studentbirth, :studentage, :studentaddress, :studentphone)";
+                            $stmtInsert = $pdo->prepare($sqlInsert);
+                            $success = $stmtInsert->execute(array(
+                                ':studentname' => $studentname,
+                                ':studentbirth' => $studentbirth,
+                                ':studentage' => $studentage,
+                                ':studentaddress' => $studentaddress,
+                                ':studentphone' => $studentphone
+                            ));
+                    
+                            if ($success) {
+                                $message = "Successful insert";
+                                header("Location: insert.php");
+                                exit();
+                            } else {
+                                $message = "Insert failed";
+                            }
                         }
                     }
+                }
+                if (isset($message)) {
+                    echo '<p>' . $message . '</p>';
                 }
             ?>
             
@@ -105,11 +113,16 @@
                     <label for="studentaddress" class="form-label">Address:</label>
                     <input type="text" name="studentaddress" id="studentaddress" class="form-control" placeholder="Enter address">
                 </div>
-                <button type="submit" class="btn btn-primary btn-add-new">Add New</button>
-            </form>
+                <div class="form-group">
+                    <label for="studentphone" class="form-label">Phone Number:</label>
+                    <input type="text" name="studentphone" id="studentphone" class="form-control" placeholder="Enter phone number">
+                </div>
 
-            <!-- Home button -->
-            <a href="main.php" class="btn btn-secondary mt-3 btn-home">Home</a>
+                <div class="button-container">
+                    <button type="submit" class="btn btn-primary btn-add-new">Add New</button>
+                    <a href="main.php" class="btn btn-secondary btn-home">Cancel</a>
+                </div>
+            </form>
         </div>
     </div>
 
